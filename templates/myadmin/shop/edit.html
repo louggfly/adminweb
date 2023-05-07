@@ -1,0 +1,139 @@
+{% extends "myadmin/base.html" %}
+
+{% block main_body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            店铺管理
+            <small>订餐系统后台管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active">店铺管理</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h2 class="box-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true">编辑店铺信息</h2>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" action="{% url 'myadmin_shop_update' shop.id %}" method="post"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">店铺名称：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="name" value="{{ shop.name }}" class="form-control"
+                                           id="inputText1" placeholder="店铺名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">联系电话：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="phone" value="{{ shop.phone }}" class="form-control"
+                                           id="inputText2" placeholder="联系电话"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">具体地址：</label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="address" value="{{ shop.address }}" class="form-control"
+                                           id="inputText3" placeholder="具体地址"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">当前状态：</label>
+                                <div class="controls">
+                                    &nbsp; &nbsp;
+                                    <input type="radio" name="status" class="input-xlarge" value="1"
+                                           {% if shop.status == 1 %}checked{% endif %}/> 营业中...
+                                    &nbsp; &nbsp;
+                                    <input type="radio" name="status" class="input-xlarge" value="2"
+                                           {% if shop.status == 2 %}checked{% endif %}/> 休息中...
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">店铺封面：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="cover_pic" value="{{ shop.cover_pic }}"
+                                           class="form-control" id="inputText3" placeholder="店铺封面地址"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">人均价格：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="price" value="{{ shop.price }}"
+                                           class="form-control" id="inputText3" placeholder="人均价格"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">营业时间：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="opentime" value="{{ shop.opentime }}"
+                                           class="form-control" id="inputText3" placeholder="营业时间"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分享链接：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="share_link" value="{{ shop.share_link }}"
+                                           class="form-control" id="inputText3" placeholder="分享链接"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">关键词：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="keyword" value="{{ shop.keyword }}"
+                                           class="form-control" id="inputText3" placeholder="关键词"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">区域：</label>
+
+                                <div class="col-sm-4">
+                                    <select name="area_id" class="form-control select2" style="width: 100%;">
+                                        {% for vo in arealist %}
+                                            <option value="{{ vo.id }}"
+                                                    {% if shop.area_id == vo.id %}selected{% endif %}>{{ vo.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">分类：</label>
+
+                                <div class="col-sm-4">
+                                    <select name="category_id" class="form-control select2" style="width: 100%;">
+                                        {% for vo in categorylist %}
+                                            <option value="{{ vo.id }}"
+                                                    {% if shop.category_id == vo.id %}selected{% endif %}>{{ vo.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">保存</button> &nbsp;
+                                <button type="submit" class="btn btn-default">重置</button>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                </div>
+                                <!-- /.box-footer -->
+                    </form>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock %}

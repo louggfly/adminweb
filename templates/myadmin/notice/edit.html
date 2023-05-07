@@ -1,0 +1,93 @@
+{% extends "myadmin/base.html" %}
+
+
+{% block main_body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            通知管理
+            <small>GFC后台管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active">通知管理</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h2 class="box-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true">编辑通知</h2>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" action="{% url 'myadmin_notice_update' notice.id %}"
+                          method="post">
+                        {% csrf_token %}
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">管理员名：</label>
+
+                                <div class="col-sm-4">
+                                    <select name="admin_id" class="form-control select2" style="width: 100%;">
+                                        {% for vo in adminlist %}
+                                            <option value="{{ vo.id }}"
+                                                    {% if notice.admin_id == vo.id %}selected{% endif %}>{{ vo.username }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">通知标题：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="title" value="{{ notice.title }}"
+                                           class="form-control" id="inputEmail3" placeholder="评论内容">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">通知内容：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="content" value="{{ notice.content }}"
+                                           class="form-control" id="inputEmail3" placeholder="评论内容">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">当前状态：</label>
+                                <div class="controls">
+                                    &nbsp; &nbsp;
+                                    <input type="radio" name="status" class="input-xlarge" value="1"
+                                           {% if notice.status == 1 %}checked{% endif %}/> 正常
+                                    &nbsp; &nbsp;
+                                    <input type="radio" name="status" class="input-xlarge" value="2"
+                                           {% if notice.status == 2 %}checked{% endif %}/> 禁用
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">更新时间：</label>
+
+                                <div class="col-sm-4">
+                                    {{ notice.time|date:'Y-m-d H:i:s' }}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">保存</button> &nbsp;
+                                <button type="reset" class="btn btn-default">重置</button>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                </div>
+                                <!-- /.box-footer -->
+                    </form>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock %}

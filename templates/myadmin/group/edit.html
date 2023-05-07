@@ -1,0 +1,97 @@
+{% extends "myadmin/base.html" %}
+
+
+{% block main_body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            小组管理
+            <small>GFC后台管理</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+            <li class="active">小组管理</li>
+        </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h2 class="box-title"><span class="glyphicon glyphicon-calendar" aria-hidden="true">编辑小组</h2>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form class="form-horizontal" action="{% url 'myadmin_group_update' group.id %}"
+                          method="post">
+                        {% csrf_token %}
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">小组名称：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="name" value="{{ group.name }}" class="form-control"
+                                           id="inputText1" placeholder="小组名称"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">小组组长：</label>
+
+                                <div class="col-sm-4">
+                                    <select name="leader_id" class="form-control select2" style="width: 100%;">
+                                        {% for vo in userlist %}
+                                            <option value="{{ vo.id }}"
+                                                    {% if group.leader_id == vo.id %}selected{% endif %}>{{ vo.username }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">目的地店铺：</label>
+
+                                <div class="col-sm-4">
+                                    <select name="shop_id" class="form-control select2" style="width: 100%;">
+                                        {% for vo in shoplist %}
+                                            <option value="{{ vo.id }}"
+                                                    {% if group.shop_id == vo.id %}selected{% endif %}>{{ vo.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">分享链接：</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="share_link" value="{{ group.share_link }}"
+                                           class="form-control"
+                                           id="inputText1" placeholder="分享链接"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">预约时间：</label>
+                                <div class="col-sm-4">
+                                    <input type="datetime-local" name="reserve_at" value="{{ group.reserve_at }}"
+                                           class="form-control"
+                                           id="inputText1" placeholder="预约时间"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary">保存</button> &nbsp;
+                                <button type="reset" class="btn btn-default">重置</button>
+                                <div class="col-sm-offset-2 col-sm-10">
+                                </div>
+                                <!-- /.box-footer -->
+                    </form>
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock %}
